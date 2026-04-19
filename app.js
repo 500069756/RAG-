@@ -2,7 +2,10 @@
 // WealthWise — Chat Application JS
 // ═══════════════════════════════════════════════════════════
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// Use environment variable if available, otherwise fallback to localhost
+const API_BASE_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000/api'
+    : 'https://rag-backend-q7cc.onrender.com/api';
 
 // ── State ──────────────────────────────────────────────────
 let currentThreadId = null;
