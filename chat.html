@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthWise — Chat Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- App Shell -->
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <a href="index.html" class="sidebar-logo">
+                    <div class="sidebar-logo-mark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    </div>
+                    <span class="sidebar-logo-text">WealthWise</span>
+                </a>
+            </div>
+
+            <button class="btn-new-chat" id="newThreadBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                New Conversation
+            </button>
+
+            <div class="thread-list-wrapper">
+                <div class="thread-list-label">Recent</div>
+                <div class="thread-list" id="threadList">
+                    <!-- Threads populated by JS -->
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="status-pill" id="statusPill">
+                    <span class="status-dot"></span>
+                    <span id="statusText">Connecting...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Mobile sidebar toggle -->
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <!-- Welcome / Empty State -->
+            <div class="welcome" id="welcomeScreen">
+                <div class="welcome-inner">
+                    <div class="welcome-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    </div>
+                    <h1>How can I help you today?</h1>
+                    <p>Ask factual questions about mutual funds — schemes, NAVs, expense ratios, SIP details, SEBI regulations, and more.</p>
+
+                    <div class="prompt-grid">
+                        <button class="prompt-card" data-question="What is the expense ratio of HDFC Top 100 Fund?">
+                            <div class="prompt-icon">📊</div>
+                            <div class="prompt-body">
+                                <div class="prompt-title">Expense Ratio</div>
+                                <div class="prompt-text">HDFC Top 100 Fund</div>
+                            </div>
+                            <svg class="prompt-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button class="prompt-card" data-question="What is the lock-in period for ELSS Tax Saver Fund?">
+                            <div class="prompt-icon">🔒</div>
+                            <div class="prompt-body">
+                                <div class="prompt-title">Lock-in Period</div>
+                                <div class="prompt-text">ELSS Tax Saver Fund</div>
+                            </div>
+                            <svg class="prompt-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button class="prompt-card" data-question="How do I download my mutual fund account statement?">
+                            <div class="prompt-icon">📄</div>
+                            <div class="prompt-body">
+                                <div class="prompt-title">Account Statement</div>
+                                <div class="prompt-text">Download process</div>
+                            </div>
+                            <svg class="prompt-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button class="prompt-card" data-question="What is the minimum SIP amount for HDFC Mid Cap Fund?">
+                            <div class="prompt-icon">💰</div>
+                            <div class="prompt-body">
+                                <div class="prompt-title">Minimum SIP</div>
+                                <div class="prompt-text">HDFC Mid Cap Fund</div>
+                            </div>
+                            <svg class="prompt-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div class="messages-area" id="chatMessages" style="display:none;">
+                <div class="messages-scroll" id="messagesScroll">
+                    <div class="messages-container" id="messagesContainer">
+                        <!-- Messages injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="loadingIndicator" style="display:none;">
+                <div class="typing-bubble">
+                    <div class="typing-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    </div>
+                    <div class="typing-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Dock -->
+            <div class="input-dock">
+                <div class="input-dock-inner">
+                    <div class="input-row">
+                        <textarea id="messageInput" placeholder="Ask about mutual funds..." rows="1"></textarea>
+                        <button class="btn-send" id="sendBtn" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        </button>
+                    </div>
+                    <div class="input-meta">
+                        <span class="input-hint">Enter to send &middot; Shift+Enter for new line</span>
+                        <span class="thread-badge" id="threadInfo"></span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
